@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Compare Prices - EduTrade</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .search-container { padding: 20px; text-align: center; }
+        #resultArea { margin-top: 20px; border: 1px solid #ccc; padding: 10px; display: none; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    </style>
+</head>
+<body>
+    <header><h1>Find Your Project Components</h1></header>
+
+    <div class="search-container">
+        <input type="text" id="userInput" placeholder="Search (e.g. Arduino, Motor, Sensor)">
+        <button onclick="comparePrices()">Compare Prices</button>
+
+        <div id="resultArea">
+            <h3 id="itemName"></h3>
+            <table>
+                <tr><th>Store Name</th><th>Price</th><th>Availability</th></tr>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function comparePrices() {
+            let input = document.getElementById("userInput").value.toLowerCase();
+            let resultArea = document.getElementById("resultArea");
+            let tableBody = document.getElementById("tableBody");
+            let itemName = document.getElementById("itemName");
+
+            // Mock Data for Logic
+            let data = {
+                "arduino": [
+                    {shop: "Ali Electronics", price: "1500 PKR", status: "In Stock"},
+                    {shop: "City Hardware", price: "1400 PKR", status: "Out of Stock"}
+                ],
+                "motor": [
+                    {shop: "Tech Hub", price: "450 PKR", status: "In Stock"},
+                    {shop: "Robot Store", price: "400 PKR", status: "In Stock"}
+                ]
+            };
+
+            if(data[input]) {
+                resultArea.style.display = "block";
+                itemName.innerText = "Results for: " + input.toUpperCase();
+                tableBody.innerHTML = "";
+                data[input].forEach(item => {
+                    tableBody.innerHTML += `<tr><td>${item.shop}</td><td>${item.price}</td><td>${item.status}</td></tr>`;
+                });
+            } else {
+                alert("Please try searching for 'Arduino' or 'Motor' for this demo.");
+            }
+        }
+    </script>
+</body>
+</html>
